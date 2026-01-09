@@ -28,18 +28,18 @@
 AI CLI Memory System is a **unified contextual memory layer** for AI-powered CLI tools like Claude Code, GitHub Copilot CLI (Codex), Gemini, and Aider. It tracks every session, learns your patterns, and automatically provides relevant context when you return to work.
 
 ### The Problem
-- 🔴 Starting fresh every session - no context from yesterday
-- 🔴 Repeating the same explanations to AI assistants
-- 🔴 Losing track of decisions made in previous sessions
-- 🔴 No memory of what worked and what didn't
-- 🔴 Managing multiple AI CLI tools with separate contexts
+- Starting fresh every session - no context from yesterday
+- Repeating the same explanations to AI assistants
+- Losing track of decisions made in previous sessions
+- No memory of what worked and what didn't
+- Managing multiple AI CLI tools with separate contexts
 
 ### The Solution
-- 🟢 **Persistent memory** across all sessions and tools
-- 🟢 **Automatic context capture** - no manual note-taking
-- 🟢 **Intelligent retrieval** - relevant memories when you need them
-- 🟢 **Pattern learning** - remembers your coding style and preferences
-- 🟢 **Unified system** - works with Claude, Codex, Gemini, Aider, and more
+- **Persistent memory** across all sessions and tools
+- **Automatic context capture** - no manual note-taking
+- **Intelligent retrieval** - relevant memories when you need them
+- **Pattern learning** - remembers your coding style and preferences
+- **Unified system** - works with Claude, Codex, Gemini, Aider, and more
 
 ---
 
@@ -60,11 +60,11 @@ AI CLI Memory System is a **unified contextual memory layer** for AI-powered CLI
 #### 🔄 Auto-Update System
 ```bash
 # All your AI CLI tools stay up-to-date automatically
-✓ Claude Code
-✓ GitHub Copilot CLI (Codex)
-✓ Gemini CLI
-✓ Aider
-✓ Cursor
+- Claude Code
+- GitHub Copilot CLI (Codex)
+- Gemini CLI
+- Aider
+- Cursor
 
 # Just launch any tool - updates check in the background
 ```
@@ -141,12 +141,12 @@ cd ai-cli-memory-system
 ```
 
 The installer will:
-1. ✅ Check dependencies
-2. ✅ Install all scripts and hooks
-3. ✅ Initialize the database
-4. ✅ Configure Claude Code
-5. ✅ Set up shell integration
-6. ✅ Run validation tests
+1. Check dependencies
+2. Install all scripts and hooks
+3. Initialize the database
+4. Configure Claude Code
+5. Set up shell integration
+6. Run validation tests
 
 ### Manual Installation
 
@@ -269,15 +269,15 @@ python3 ~/ai-cli-memory-system/scripts/auto_updater.py check
 
 Output:
 ```
-🔍 Checking for updates...
+Checking for updates...
 
-✓ claude:
+claude:
    Version: 2.1.1
-   ✓ Up to date
+   Up to date
 
-✓ codex:
+codex:
    Version: 1.0.4
-   ⬆️  Update available: 1.0.5
+   Update available: 1.0.5
 ```
 
 #### Update All Tools
@@ -296,11 +296,11 @@ python3 ~/ai-cli-memory-system/scripts/memory_manager.py weekly 2026 2 claude
 
 ### 1. Session Start (Pre-Hook)
 ```bash
-🚀 Starting claude session...
-✓ Checking for updates...
-📝 Session ID: a3f7d9e2b1c4
-💭 Found 3 recent session(s) in this directory
-📂 Git: feature/new-api
+Starting claude session...
+Checking for updates...
+Session ID: a3f7d9e2b1c4
+Found 3 recent session(s) in this directory
+Git: feature/new-api
 ```
 
 ### 2. During Session
@@ -311,11 +311,11 @@ python3 ~/ai-cli-memory-system/scripts/memory_manager.py weekly 2026 2 claude
 
 ### 3. Session End (Post-Hook)
 ```bash
-👋 Ending claude session...
-✓ Session saved
-✓ Knowledge base updated
-📊 Creating weekly summary...
-✓ Session completed successfully
+Ending claude session...
+Session saved
+Knowledge base updated
+Creating weekly summary...
+Session completed successfully
 ```
 
 ### 4. Next Session
@@ -430,10 +430,10 @@ python3 ~/ai-cli-memory-system/scripts/auto_updater.py check &> /dev/null &
 
 Contributions are welcome! Here's how you can help:
 
-1. 🐛 **Report bugs** - Open an issue with details
-2. 💡 **Suggest features** - Share your ideas
-3. 🔧 **Submit PRs** - Fix bugs or add features
-4. 📖 **Improve docs** - Help others understand
+1. **Report bugs** - Open an issue with details
+2. **Suggest features** - Share your ideas
+3. **Submit PRs** - Fix bugs or add features
+4. **Improve docs** - Help others understand
 
 ### Development Setup
 
