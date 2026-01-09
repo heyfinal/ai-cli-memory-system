@@ -484,20 +484,7 @@ MIT License - see [LICENSE](LICENSE) for details
 
 ---
 
-## 📞 Support
-
-- 📧 **Email**: support@yourdomain.com
-- 💬 **Discord**: [Join our community](https://discord.gg/yourserver)
-- 🐦 **Twitter**: [@yourhandle](https://twitter.com/yourhandle)
-- 📖 **Documentation**: [Full docs](https://yourdomain.com/docs)
-
----
-
 <div align="center">
-
-**If this project helps you, please give it a ⭐️!**
-
-Made with ❤️ for the AI developer community
 
 [⬆ Back to top](#-ai-cli-memory-system)
 
