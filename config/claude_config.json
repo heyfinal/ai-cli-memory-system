@@ -1,0 +1,23 @@
+{
+  "memory": {
+    "enabled": true,
+    "database": "~/.claude/memory/context.db",
+    "auto_summarize": true,
+    "summarize_interval": "weekly"
+  },
+  "hooks": {
+    "pre-session": "~/ai-cli-memory-system/hooks/unified_hooks.sh pre",
+    "post-session": "~/ai-cli-memory-system/hooks/unified_hooks.sh post"
+  },
+  "auto_update": {
+    "enabled": true,
+    "check_interval": "daily",
+    "auto_install": false
+  },
+  "context_retrieval": {
+    "enabled": true,
+    "max_recent_sessions": 10,
+    "include_project_patterns": true,
+    "include_knowledge_base": true
+  }
+}
