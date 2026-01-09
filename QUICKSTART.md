@@ -138,7 +138,7 @@ chmod +x ~/ai-cli-memory-system/hooks/*.sh
 ## Support
 
 Having issues? Check:
-1. [GitHub Issues](https://github.com/YOURUSERNAME/ai-cli-memory-system/issues)
+1. [GitHub Issues](https://github.com/heyfinal/ai-cli-memory-system/issues)
 2. [Full Documentation](README.md)
 3. [Discord Community](https://discord.gg/yourserver)
 

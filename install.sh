@@ -5,7 +5,7 @@
 set -e
 
 VERSION="1.0.0"
-REPO_URL="https://github.com/YOURUSERNAME/ai-cli-memory-system"
+REPO_URL="https://github.com/heyfinal/ai-cli-memory-system"
 
 # Colors for output
 RED='\033[0;31m'

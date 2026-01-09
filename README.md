@@ -104,7 +104,7 @@ AI CLI Memory System is a **unified contextual memory layer** for AI-powered CLI
 
 ### One-Line Install
 ```bash
-curl -fsSL https://raw.githubusercontent.com/YOURUSERNAME/ai-cli-memory-system/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/heyfinal/ai-cli-memory-system/main/install.sh | bash
 ```
 
 ### Start Using Immediately
@@ -133,7 +133,7 @@ claude
 #### macOS / Linux / WSL
 ```bash
 # Clone the repository
-git clone https://github.com/YOURUSERNAME/ai-cli-memory-system.git
+git clone https://github.com/heyfinal/ai-cli-memory-system.git
 cd ai-cli-memory-system
 
 # Run installer
@@ -438,7 +438,7 @@ Contributions are welcome! Here's how you can help:
 ### Development Setup
 
 ```bash
-git clone https://github.com/YOURUSERNAME/ai-cli-memory-system.git
+git clone https://github.com/heyfinal/ai-cli-memory-system.git
 cd ai-cli-memory-system
 
 # Install in development mode
