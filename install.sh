@@ -205,23 +205,33 @@ EOF
     print_success "Claude Code configured"
 }
 
-# Configure other CLI tools
-configure_others() {
-    print_info "Configuring other CLI tools..."
+# Configure shell wrappers
+configure_wrappers() {
+    print_info "Configuring shell wrappers..."
 
-    # Codex (GitHub Copilot CLI)
-    if command -v gh >/dev/null 2>&1; then
-        # Add environment variable to .zshrc or .bashrc
-        SHELL_RC=""
-        if [[ -f "$HOME/.zshrc" ]]; then
-            SHELL_RC="$HOME/.zshrc"
-        elif [[ -f "$HOME/.bashrc" ]]; then
-            SHELL_RC="$HOME/.bashrc"
-        fi
+    # Detect shell config file
+    SHELL_RC=""
+    if [[ -f "$HOME/.zshrc" ]]; then
+        SHELL_RC="$HOME/.zshrc"
+    elif [[ -f "$HOME/.bashrc" ]]; then
+        SHELL_RC="$HOME/.bashrc"
+    else
+        print_warning "No shell config file found (.zshrc or .bashrc)"
+        return
+    fi
 
-        if [[ -n "$SHELL_RC" ]]; then
-            if ! grep -q "AI_CLI_MEMORY" "$SHELL_RC"; then
-                cat >> "$SHELL_RC" << 'EOF'
+    print_info "Using shell config: $SHELL_RC"
+
+    # Remove old wrappers if they exist
+    if grep -q "# AI CLI Memory System" "$SHELL_RC" 2>/dev/null; then
+        print_info "Removing old wrapper configuration..."
+        sed -i.bak '/# AI CLI Memory System/,/^fi$/d' "$SHELL_RC" 2>/dev/null || true
+        sed -i.bak '/# Claude Code Memory-Aware Wrapper/,/^}$/d' "$SHELL_RC" 2>/dev/null || true
+        sed -i.bak '/# Codex CLI Memory-Aware Wrapper/,/^}$/d' "$SHELL_RC" 2>/dev/null || true
+    fi
+
+    # Add environment variables and wrappers
+    cat >> "$SHELL_RC" << 'WRAPPER_EOF'
 
 # AI CLI Memory System
 export AI_CLI_MEMORY="$HOME/.claude/memory/context.db"
@@ -231,13 +241,98 @@ export AI_HOOKS_DIR="$HOME/ai-cli-memory-system/hooks"
 if [[ -f "$HOME/ai-cli-memory-system/scripts/auto_updater.py" ]]; then
     python3 "$HOME/ai-cli-memory-system/scripts/auto_updater.py" check claude codex gemini aider &> /dev/null &
 fi
-EOF
-                print_success "Shell configuration updated"
-            fi
-        fi
+
+# Claude Code Memory-Aware Wrapper
+claude() {
+    local CURRENT_DIR="$PWD"
+    local GIT_BRANCH=""
+
+    if git rev-parse --git-dir > /dev/null 2>&1; then
+        GIT_BRANCH=$(git branch --show-current 2>/dev/null)
     fi
 
-    print_success "Other tools configured"
+    local MEMORY_PROMPT="Read your memory graph to load context about:
+- Daniel Gillaspy (person, projects, preferences, work history)
+- Active projects in current directory: $CURRENT_DIR"
+
+    if [ -n "$GIT_BRANCH" ]; then
+        MEMORY_PROMPT="$MEMORY_PROMPT
+- Current git branch: $GIT_BRANCH"
+    fi
+
+    MEMORY_PROMPT="$MEMORY_PROMPT
+
+IMPORTANT PREFERENCES:
+- Use 'codex' CLI as subagent for routine tasks (code reviews, refactoring, testing)
+- Reserve Claude Code for complex reasoning, planning, critical decisions
+- This reduces Claude API usage significantly
+
+Check memory for recent work and be ready to continue."
+
+    # Start memory session tracking
+    if [ -f "$HOME/ai-cli-memory-system/scripts/memory_manager.py" ]; then
+        python3 "$HOME/ai-cli-memory-system/scripts/memory_manager.py" start "claude" "$CURRENT_DIR" > /dev/null 2>&1 &
+    fi
+
+    # Launch with memory prompt or pass args
+    if [ $# -eq 0 ]; then
+        echo -e '\033[0;36m🧠 Loading memory context...\033[0m'
+        echo "$MEMORY_PROMPT" | command claude
+    else
+        command claude "$@"
+    fi
+
+    # Capture learnings
+    if [ -f "$HOME/ai-cli-memory-system/scripts/capture_learnings.sh" ]; then
+        bash "$HOME/ai-cli-memory-system/scripts/capture_learnings.sh" analyze > /dev/null 2>&1 &
+    fi
+}
+
+# Codex CLI Memory-Aware Wrapper
+codex() {
+    local CURRENT_DIR="$PWD"
+    local GIT_BRANCH=""
+
+    if git rev-parse --git-dir > /dev/null 2>&1; then
+        GIT_BRANCH=$(git branch --show-current 2>/dev/null)
+    fi
+
+    local MEMORY_PROMPT="Read your memory graph to load context about:
+- Daniel Gillaspy (person, projects, preferences, work history)
+- Active projects in current directory: $CURRENT_DIR"
+
+    if [ -n "$GIT_BRANCH" ]; then
+        MEMORY_PROMPT="$MEMORY_PROMPT
+- Current git branch: $GIT_BRANCH"
+    fi
+
+    MEMORY_PROMPT="$MEMORY_PROMPT
+
+Check memory for recent work and be ready to continue."
+
+    # Start memory session tracking
+    if [ -f "$HOME/ai-cli-memory-system/scripts/memory_manager.py" ]; then
+        python3 "$HOME/ai-cli-memory-system/scripts/memory_manager.py" start "codex" "$CURRENT_DIR" > /dev/null 2>&1 &
+    fi
+
+    # Launch with memory prompt or pass args
+    # Always use --ask-for-approval never --sandbox danger-full-access for full automation
+    if [ $# -eq 0 ]; then
+        echo -e '\033[0;36m🧠 Loading memory context...\033[0m'
+        echo "$MEMORY_PROMPT" | command codex --ask-for-approval never --sandbox danger-full-access
+    else
+        command codex --ask-for-approval never --sandbox danger-full-access "$@"
+    fi
+
+    # Capture learnings
+    if [ -f "$HOME/ai-cli-memory-system/scripts/capture_learnings.sh" ]; then
+        bash "$HOME/ai-cli-memory-system/scripts/capture_learnings.sh" analyze > /dev/null 2>&1 &
+    fi
+}
+WRAPPER_EOF
+
+    print_success "Shell wrappers installed"
+    print_info "To activate: source $SHELL_RC"
 }
 
 # Run tests
@@ -318,7 +413,7 @@ main() {
     configure_claude
     echo ""
 
-    configure_others
+    configure_wrappers
     echo ""
 
     run_tests
