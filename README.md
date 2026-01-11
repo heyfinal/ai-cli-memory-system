@@ -128,25 +128,36 @@ claude
 - Git
 - Any AI CLI tool (Claude Code, Codex, Gemini, Aider)
 
-### Automatic Installation
+### Automatic Installation (Recommended)
 
-#### macOS / Linux / WSL
+#### One-Line Install
+The fastest way to get started:
+
 ```bash
-# Clone the repository
-git clone https://github.com/heyfinal/ai-cli-memory-system.git
-cd ai-cli-memory-system
-
-# Run installer
-./install.sh
+curl -fsSL https://raw.githubusercontent.com/heyfinal/ai-cli-memory-system/main/install.sh | bash
 ```
 
-The installer will:
-1. Check dependencies
-2. Install all scripts and hooks
-3. Initialize the database
-4. Configure Claude Code
-5. Set up shell integration
-6. Run validation tests
+**That's it!** The installer will:
+1. ✅ Check dependencies (Python 3, Git)
+2. ✅ Clone the repository
+3. ✅ Install all scripts and hooks
+4. ✅ Initialize the memory database
+5. ✅ Configure Claude Code hooks
+6. ✅ Install shell wrappers for `claude` and `codex`
+7. ✅ Run validation tests
+
+After installation, just reload your shell:
+```bash
+source ~/.zshrc  # or source ~/.bashrc
+```
+
+#### For Fresh Claude Code Install
+Paste this into a new Claude Code session:
+```
+Install the AI CLI Memory System from https://github.com/heyfinal/ai-cli-memory-system by running the installer
+```
+
+See [INSTALL.md](INSTALL.md) for detailed installation instructions.
 
 ### Manual Installation
 
