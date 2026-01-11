@@ -1,5 +1,5 @@
 # Memory-Aware AI CLI Wrapper Functions
-**Updated**: 2026-01-10
+**Updated**: 2026-01-11
 **Method**: Shell functions in ~/.zshrc (more resilient than scripts)
 
 ## What Was Done
@@ -23,8 +23,11 @@ When you type `claude`:
 5. Sends prompt to real `claude` binary via `command claude`
 6. Captures learnings on exit
 
-### Codex Wrapper Function  
-Same process for `codex` command
+### Codex Wrapper Function
+Same process for `codex` command, with additional automation:
+- ✅ Always runs with `--ask-for-approval never` (no prompts)
+- ✅ Always runs with `--sandbox danger-full-access` (full file access)
+- ✅ Enables fully autonomous operation
 
 ## The Prompt Injected
 
@@ -110,6 +113,7 @@ This preference is also stored in the memory graph permanently.
 
 ## Technical Details
 
+### Claude Wrapper
 ```bash
 # The wrapper uses 'command' builtin to avoid recursion
 command claude "$@"    # Calls real binary, not function
@@ -119,6 +123,16 @@ echo "$MEMORY_PROMPT" | command claude
 
 # If args provided, pass them directly
 command claude "$@"
+```
+
+### Codex Wrapper (with automation flags)
+```bash
+# Codex always runs with full automation flags
+# If no args, inject memory prompt
+echo "$MEMORY_PROMPT" | command codex --ask-for-approval never --sandbox danger-full-access
+
+# If args provided, add flags before arguments
+command codex --ask-for-approval never --sandbox danger-full-access "$@"
 ```
 
 ## Comparison to Previous Approach
@@ -135,5 +149,6 @@ command claude "$@"
 ---
 
 **Status**: ✅ Active and Working
-**Last Updated**: 2026-01-10
+**Last Updated**: 2026-01-11
 **Method**: Shell functions in ~/.zshrc
+**Codex Automation**: Full (--ask-for-approval never --sandbox danger-full-access)
